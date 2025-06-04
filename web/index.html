@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Solar Energy Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-solar-panel"></i> Live Solar Energy Dashboard</h1>
+                <div class="status-indicator">
+                    <span id="status-dot" class="status-dot offline"></span>
+                    <span id="status-text">Connecting...</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard -->
+        <main class="dashboard">
+            <!-- Current Power Section -->
+            <section class="power-section">
+                <div class="power-card main-power">
+                    <div class="card-header">
+                        <h2><i class="fas fa-bolt"></i> Current Power Output</h2>
+                    </div>
+                    <div class="power-display">
+                        <span id="current-power" class="power-value">---</span>
+                        <span class="power-unit">W</span>
+                    </div>
+                    <div class="power-status">
+                        <span id="power-status">Waiting for data...</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats Grid -->
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Total Energy</h3>
+                        <span id="total-energy" class="stat-value">--- kWh</span>
+                        <span class="stat-label">Lifetime Production</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Grid Frequency</h3>
+                        <span id="grid-frequency" class="stat-value">--- Hz</span>
+                        <span class="stat-label">Grid Sync</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-thermometer-half"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Temperature</h3>
+                        <span id="temperature" class="stat-value">--- °C</span>
+                        <span class="stat-label">Cabinet Temp</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Power Factor</h3>
+                        <span id="power-factor" class="stat-value">---</span>
+                        <span class="stat-label">Efficiency</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Technical Details -->
+            <section class="technical-section">
+                <div class="tech-card">
+                    <h3><i class="fas fa-solar-panel"></i> DC Input</h3>
+                    <div class="tech-details">
+                        <div class="tech-item">
+                            <span class="tech-label">DC Voltage:</span>
+                            <span id="dc-voltage" class="tech-value">--- V</span>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-label">DC Current:</span>
+                            <span id="dc-current" class="tech-value">--- A</span>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-label">DC Power:</span>
+                            <span id="dc-power" class="tech-value">--- W</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tech-card">
+                    <h3><i class="fas fa-home"></i> AC Output</h3>
+                    <div class="tech-details">
+                        <div class="tech-item">
+                            <span class="tech-label">AC Voltage:</span>
+                            <span id="ac-voltage" class="tech-value">--- V</span>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-label">AC Current:</span>
+                            <span id="ac-current" class="tech-value">--- A</span>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-label">AC Power:</span>
+                            <span id="ac-power" class="tech-value">--- W</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Device Information -->
+            <section class="device-section">
+                <div class="device-card">
+                    <h3><i class="fas fa-info-circle"></i> Inverter Information</h3>
+                    <div class="device-details">
+                        <div class="device-item">
+                            <span class="device-label">Manufacturer:</span>
+                            <span id="manufacturer" class="device-value">---</span>
+                        </div>
+                        <div class="device-item">
+                            <span class="device-label">Model:</span>
+                            <span id="model" class="device-value">---</span>
+                        </div>
+                        <div class="device-item">
+                            <span class="device-label">Serial Number:</span>
+                            <span id="serial" class="device-value">---</span>
+                        </div>
+                        <div class="device-item">
+                            <span class="device-label">Firmware:</span>
+                            <span id="firmware" class="device-value">---</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p><i class="fas fa-clock"></i> Last Updated: <span id="last-updated">Never</span></p>
+                <p><i class="fas fa-wifi"></i> Data refreshes every 10 seconds</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html> 

@@ -1,0 +1,56 @@
+# SunSpec Gateway Configuration
+gateway:
+  name: "SunSpec Gateway"
+  version: "1.0.0"
+  description: "Production-grade brand-agnostic SunSpec inverter gateway"
+
+# Server configuration
+server:
+  host: "0.0.0.0"
+  port: 8888
+  log_level: "INFO"
+
+# Inverter connection settings
+inverter:
+  # Connection type: 'tcp' or 'rtu'
+  connection_type: "tcp"
+  
+  # TCP settings (when connection_type is 'tcp')
+  tcp:
+    host: "192.168.1.100"  # Your working Sungrow inverter IP
+    port: 502
+    slave_id: 1
+    timeout: 10
+  
+  # RTU settings (when connection_type is 'rtu')
+  rtu:
+    port: "COM1"  # Windows: COM1, Linux: /dev/ttyUSB0
+    baudrate: 19200
+    bytesize: 8
+    parity: "N"
+    stopbits: 1
+    slave_id: 1
+    timeout: 10
+
+# Data collection settings
+data_collection:
+  # Polling interval in seconds
+  poll_interval: 30
+  
+  # Models to read from the inverter
+  # Only requesting models that exist on your Sungrow inverter:
+  models_to_read:
+    - 1    # Common model (device identification)
+    - 101  # Inverter model (power and energy data)
+  
+  # Retry settings
+  max_retries: 3
+  retry_delay: 5
+
+# Logging configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "gateway.log"
+  max_file_size: "10MB"
+  backup_count: 5 

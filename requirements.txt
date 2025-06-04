@@ -1,0 +1,22 @@
+# Core SunSpec library - official next-generation library
+pysunspec2>=1.2.1
+
+# Modbus communication
+pyserial>=3.5
+
+# Configuration and logging
+pyyaml>=6.0
+fastapi>=0.100.0
+uvicorn>=0.23.0
+
+# Data validation and serialization
+pydantic>=2.0.0
+
+# HTTP client for web interfaces (optional)
+httpx>=0.24.0
+
+# Async support
+asyncio-mqtt>=0.13.0
+
+# Environment configuration
+python-dotenv>=1.0.0 
