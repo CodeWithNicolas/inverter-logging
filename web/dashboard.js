@@ -1,8 +1,8 @@
 // Dashboard Configuration
 const CONFIG = {
-    API_BASE_URL: window.location.origin,
+    API_BASE_URL: 'http://192.168.1.7:8080', // Local gateway endpoint
     REFRESH_INTERVAL: 10000, // 10 seconds
-    TIMEOUT: 5000 // 5 seconds
+    TIMEOUT: 10000 // 10 seconds (increased for cross-origin requests)
 };
 
 // Dashboard State
