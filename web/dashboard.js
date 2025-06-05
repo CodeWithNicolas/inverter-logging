@@ -1,9 +1,14 @@
 // Dashboard Configuration
 const CONFIG = {
-    API_BASE_URL: 'http://192.168.1.101:8080', // Local gateway endpoint (updated IP)
+    API_BASE_URL: 'http://192.168.1.102:8080', // Local gateway endpoint
     REFRESH_INTERVAL: 10000, // 10 seconds
     TIMEOUT: 10000 // 10 seconds (increased for cross-origin requests)
 };
+
+// Add debug logging
+console.log('🔧 Dashboard Config:', CONFIG);
+console.log('🌐 Current protocol:', window.location.protocol);
+console.log('🌐 Current host:', window.location.host);
 
 // Dashboard State
 let lastUpdateTime = null;
@@ -77,8 +82,11 @@ async function fetchWithTimeout(endpoint) {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), CONFIG.TIMEOUT);
     
+    const fullUrl = `${CONFIG.API_BASE_URL}${endpoint}`;
+    console.log(`📡 Fetching: ${fullUrl}`);
+    
     try {
-        const response = await fetch(`${CONFIG.API_BASE_URL}${endpoint}`, {
+        const response = await fetch(fullUrl, {
             signal: controller.signal,
             headers: {
                 'Accept': 'application/json',
@@ -87,6 +95,7 @@ async function fetchWithTimeout(endpoint) {
         });
         
         clearTimeout(timeoutId);
+        console.log(`✅ Response ${response.status} for ${endpoint}`);
         
         if (!response.ok) {
             throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -95,6 +104,15 @@ async function fetchWithTimeout(endpoint) {
         return await response.json();
     } catch (error) {
         clearTimeout(timeoutId);
+        console.error(`❌ Fetch failed for ${endpoint}:`, error.name, error.message);
+        
+        // Log specific error types
+        if (error.name === 'AbortError') {
+            console.error('⏰ Request timed out');
+        } else if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
+            console.error('🔌 Network error - possible CORS or firewall issue');
+        }
+        
         throw error;
     }
 }

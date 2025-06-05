@@ -12,6 +12,7 @@ from pathlib import Path
 from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from pydantic import BaseModel
 
@@ -63,6 +64,15 @@ class SunSpecGateway:
             description="Production-grade brand-agnostic SunSpec inverter gateway",
             version="1.0.0",
             lifespan=lifespan
+        )
+        
+        # Add CORS middleware to handle preflight requests
+        self.app.add_middleware(
+            CORSMiddleware,
+            allow_origins=["*"],  # Allow all origins
+            allow_credentials=True,
+            allow_methods=["*"],  # Allow all methods including OPTIONS
+            allow_headers=["*"],  # Allow all headers
         )
         
         # Mount static files for web dashboard
@@ -259,15 +269,6 @@ class SunSpecGateway:
                 "last_poll": max([data.get("timestamp", "") for data in self.last_data.values()]) if self.last_data else None,
                 "timestamp": datetime.now().isoformat()
             }
-        
-        # Add CORS headers for web dashboard
-        @self.app.middleware("http")
-        async def add_cors_headers(request, call_next):
-            response = await call_next(request)
-            response.headers["Access-Control-Allow-Origin"] = "*"
-            response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
-            response.headers["Access-Control-Allow-Headers"] = "*"
-            return response
 
 
 async def create_gateway(config_path: str = "config.yaml") -> SunSpecGateway:
@@ -275,7 +276,6 @@ async def create_gateway(config_path: str = "config.yaml") -> SunSpecGateway:
     try:
         config = load_config(config_path)
         gateway = SunSpecGateway(config)
-        await gateway.startup()
         return gateway
     except Exception as e:
         logger.error(f"Failed to create gateway: {e}")

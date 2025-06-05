@@ -1,0 +1,38 @@
+runtime: python39
+service: http-dashboard
+
+# Static file serving for the web dashboard (HTTP version)
+handlers:
+  # Serve main files
+  - url: /
+    static_files: web/index.html
+    upload: web/index.html
+    secure: never  # Force HTTP instead of HTTPS
+
+  - url: /index.html
+    static_files: web/index.html
+    upload: web/index.html
+    secure: never
+
+  # Serve JavaScript
+  - url: /dashboard.js
+    static_files: web/dashboard.js
+    upload: web/dashboard.js
+    secure: never
+
+  # Serve CSS
+  - url: /style.css
+    static_files: web/style.css
+    upload: web/style.css
+    secure: never
+
+  # Serve any additional static files
+  - url: /(.+)
+    static_files: web/\1
+    upload: web/.*
+    secure: never
+
+# Basic configuration
+automatic_scaling:
+  min_instances: 0
+  max_instances: 1 
